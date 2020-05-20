@@ -46,9 +46,6 @@ import { ellipsis } from "./utils";
 import ATable from "../components/ATable/index.vue";
 import ATabs from "../components/ATabs/index.vue";
 import ATableColumn from "../components/ATableColumn";
-import Cookie from "js-cookie";
-
-console.log(Cookie.get());
 
 export default {
   name: "app",
@@ -98,7 +95,6 @@ export default {
 
       try {
         const result = copy(parserCookie(e.target.value));
-        console.log(result);
         if (!Object.keys(result).length) throw new Error("请填写正确的cookie");
         this.noticeRemoteCookieJson = result;
       } catch (e) {
@@ -112,8 +108,6 @@ export default {
     async getPageCookie() {
       let result = await this.$utils.noticeContent({ event: "get-cookie" });
       if (!result.success) return;
-      /*     const cookies = this.$utils.parserCookie(result.data);
-      if (!cookies) return;*/
       this.cookies = result.data.json;
       this.remoteCookie = result.data.cookie;
     },
@@ -123,9 +117,7 @@ export default {
         .reduce((p, it) => p + `${it.key}=${it.value};`, "")
         .replace(/;$/, "");
 
-      console.log(cookies);
-
-      this.$utils.clipboard(this.remoteCookie, e);
+      this.$utils.clipboard(cookies, e);
     },
 
     async setCookie() {
