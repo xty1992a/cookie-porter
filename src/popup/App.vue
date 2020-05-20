@@ -2,13 +2,7 @@
   <div class="app">
     <ATabs v-model="currentTab" :options="tabList" />
     <template v-if="currentTab === 0">
-      <ATable
-        :list="list"
-        :columns="columns"
-        selection
-        height="200px"
-        @selection="onSelection"
-      >
+      <ATable :list="list" height="200px" @selection="onSelection">
         <ATableColumn type="selection" />
         <ATableColumn label="属性名" prop="key">
           <template #default="item">
@@ -58,11 +52,6 @@ export default {
         { label: "当前", value: 0 },
         { label: "覆写", value: 1 },
       ],
-      columns: [
-        { prop: "key", label: "属性名" },
-        { prop: "value", label: "属性值" },
-      ],
-
       pickedItems: [],
     };
   },
@@ -109,7 +98,6 @@ export default {
       let result = await this.$utils.noticeContent({ event: "get-cookie" });
       if (!result.success) return;
       this.cookies = result.data.json;
-      this.remoteCookie = result.data.cookie;
     },
 
     copyRemoteCookie(e) {
@@ -127,13 +115,6 @@ export default {
       });
       if (!result.success) return;
       this.$toast("覆盖成功!");
-    },
-
-    emitCookie() {
-      this.$utils.noticeContent({
-        event: "notice-cookie",
-        data: "hello",
-      });
     },
 
     async delItem(item) {

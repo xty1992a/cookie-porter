@@ -24,10 +24,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       Cookie.remove(key);
       sendResponse("del-cookie:ok");
       break;
-    case "notice-cookie":
-      console.log(message.data);
-      sendResponse("notice-cookie:ok");
-      break;
   }
 });
 
